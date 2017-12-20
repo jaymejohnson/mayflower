@@ -1,0 +1,63 @@
+{% set imageClass = generalTeaser.image ? 'ma__general-teaser--image-link' : '' %}
+{% set stacked = generalTeaser.image and generalTeaser.stacked ? 'stacked' : 'side-by-side' %}
+
+
+<section class="ma__general-teaser {{ imageClass }} {{ stacked }}">
+  {% if generalTeaser.image %}
+    <a
+      class="ma__general-teaser__image-link"
+      href="{{ generalTeaser.title.href }}"
+      title="{{ generalTeaser.title.text }}">
+      {% set image = generalTeaser.image %}
+      <img
+        src="{{ image.src }}"
+        aria-label="{{ image.alt }}"
+        role="img"
+      >
+      </img>
+    </a>
+  {% endif %}
+  <div class="ma__general-teaser__details">
+    {% if generalTeaser.eyebrow %}
+      <div class="ma__general-teaser__eyebrow">
+        <span>{{ generalTeaser.eyebrow }}</span>
+      </div>
+    {% endif %}
+    {% set headingLevel = generalTeaser.level ? : 2 %}
+    <h{{ headingLevel }} class="ma__general-teaser__title">
+      {% set decorativeLink = generalTeaser.title %}
+      {% include "@atoms/decorative-link.twig" %}
+    </h{{ headingLevel }}>
+    {% if generalTeaser.emphasizedPrefix or generalTeaser.emphasizedText %}
+      <div class="ma__general-teaser__details">
+        {% if generalTeaser.emphasizedPrefix %}
+          <span class="ma__general-teaser__emph-prefix">
+            {{ generalTeaser.emphasizedPrefix }}
+          </span>
+        {% endif %}
+        {% if generalTeaser.emphasizedText %}
+          <span class="ma__general-teaser__emph-text">
+            {{ generalTeaser.emphasizedText }}
+          </span>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+  {% if generalTeaser.description or generalTeaser.more %}
+  <div class="ma__general-teaser__body">
+    {% if generalTeaser.description %}
+      <div class="ma__general-teaser__description">
+        {% set richText = generalTeaser.description %}
+        {% include "@organisms/by-author/rich-text.twig" %}
+      </div>
+    {% endif %}
+    {% if generalTeaser.more %}
+      <div class="ma__general-teaser__more">
+        {% set decorativeLink = generalTeaser.more %}
+        {% include "@atoms/decorative-link.twig" %}
+      </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+</section>
